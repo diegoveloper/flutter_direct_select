@@ -1,3 +1,7 @@
+## [1.0.2]
+
+* `backgroundColor` was added.
+
 ## [1.0.1]
 
 * Fixed issue when scroll is not listening.
