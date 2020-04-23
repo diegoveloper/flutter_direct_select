@@ -17,6 +17,9 @@ class DirectSelect extends StatefulWidget {
   /// Selected index of your selection list
   final int selectedIndex;
 
+  /// Color of the background, [Colors.white] by default
+  final Color backgroundColor;
+
   const DirectSelect({
     Key key,
     this.selectedIndex,
@@ -24,6 +27,7 @@ class DirectSelect extends StatefulWidget {
     @required this.items,
     @required this.onSelectedItemChanged,
     @required this.itemExtent,
+    this.backgroundColor = Colors.white,
   })  : assert(child != null),
         assert(onSelectedItemChanged != null),
         assert(itemExtent != null),
@@ -37,7 +41,7 @@ class _DirectSelectState extends State<DirectSelect> {
   FixedExtentScrollController _controller;
   OverlayEntry _overlayEntry;
   GlobalKey _key = GlobalKey();
-  GlobalKey<MySelectionOverlayState> _keyOverlay = GlobalKey();
+  GlobalKey<_MySelectionOverlayState> _keyOverlay = GlobalKey();
   int _currentIndex;
 
   _createOverlay() async {
@@ -48,10 +52,12 @@ class _DirectSelectState extends State<DirectSelect> {
     final itemSize = widget.itemExtent;
     OverlayState overlayState = Overlay.of(context);
     _overlayEntry = OverlayEntry(
-      builder: (context) => MySelectionOverlay(
+      builder: (context) => _MySelectionOverlay(
         key: _keyOverlay,
         top: result + itemSize,
-        child: MySelectionList(
+        backgroundColor: widget.backgroundColor,
+        child: _MySelectionList(
+          backgroundColor: widget.backgroundColor,
           itemExtent: widget.itemExtent,
           childCount: widget.items != null ? widget.items.length : 0,
           onSelectedItemChanged: (index) {
@@ -121,25 +127,29 @@ class _DirectSelectState extends State<DirectSelect> {
   }
 }
 
-class MySelectionOverlay extends StatefulWidget {
+class _MySelectionOverlay extends StatefulWidget {
   final double top;
   final Widget child;
   final double bottom;
+  final Color backgroundColor;
+  final Color textColor;
 
-  const MySelectionOverlay({
+  const _MySelectionOverlay({
     Key key,
     this.top,
     this.bottom,
     this.child,
+    this.backgroundColor,
+    this.textColor,
   }) : super(key: key);
 
   @override
-  MySelectionOverlayState createState() {
-    return new MySelectionOverlayState();
+  _MySelectionOverlayState createState() {
+    return _MySelectionOverlayState();
   }
 }
 
-class MySelectionOverlayState extends State<MySelectionOverlay>
+class _MySelectionOverlayState extends State<_MySelectionOverlay>
     with SingleTickerProviderStateMixin {
   AnimationController _controller;
 
@@ -147,9 +157,9 @@ class MySelectionOverlayState extends State<MySelectionOverlay>
   void initState() {
     _controller = AnimationController(
         vsync: this,
-        lowerBound: 0.7,
+        lowerBound: 0.0,
         upperBound: 1.0,
-        duration: Duration(milliseconds: 200));
+        duration: Duration(milliseconds: 230));
     super.initState();
   }
 
@@ -162,29 +172,27 @@ class MySelectionOverlayState extends State<MySelectionOverlay>
   @override
   Widget build(BuildContext context) {
     _controller.forward();
-    return Stack(
-      children: <Widget>[
-        Positioned.fill(
-          top: 0.0,
-          left: 0.0,
-          child: Container(
-            color: Colors.white,
+    return FadeTransition(
+      opacity: Tween(begin: 0.0, end: 1.0).animate(_controller),
+      child: Stack(
+        children: <Widget>[
+          Positioned.fill(
+            child: Container(
+              color: widget.backgroundColor,
+            ),
           ),
-        ),
-        Positioned(
-          top: widget.top,
-          left: 0.0,
-          right: 0.0,
-          bottom: widget.bottom,
-          child: FadeTransition(
-            opacity: _controller,
+          Positioned(
+            top: widget.top,
+            left: 0.0,
+            right: 0.0,
+            bottom: widget.bottom,
             child: ScaleTransition(
-              scale: _controller,
+              scale: Tween(begin: 1.0, end: 1.12).animate(_controller),
               child: widget.child,
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
@@ -193,26 +201,28 @@ class MySelectionOverlayState extends State<MySelectionOverlay>
   }
 }
 
-class MySelectionList extends StatelessWidget {
+class _MySelectionList extends StatelessWidget {
   final FixedExtentScrollController controller;
   final IndexedWidgetBuilder builder;
   final int childCount;
   final ValueChanged<int> onSelectedItemChanged;
   final double itemExtent;
+  final Color backgroundColor;
 
-  const MySelectionList({
+  const _MySelectionList({
     Key key,
     @required this.controller,
     @required this.builder,
     @required this.childCount,
     @required this.onSelectedItemChanged,
     @required this.itemExtent,
+    this.backgroundColor,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Colors.white,
+      color: backgroundColor,
       child: Container(
           height: MediaQuery.of(context).size.height,
           child: CupertinoPicker.builder(
@@ -221,9 +231,9 @@ class MySelectionList extends StatelessWidget {
             itemExtent: itemExtent,
             childCount: childCount,
             useMagnifier: true,
-            magnification: 1.25,
+            magnification: 1.15,
             diameterRatio: 3.0,
-            backgroundColor: Colors.white,
+            backgroundColor: backgroundColor,
             onSelectedItemChanged: onSelectedItemChanged,
             itemBuilder: builder,
           )),

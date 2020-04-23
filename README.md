@@ -8,16 +8,18 @@ Inspired by [Virgil Pana](https://dribbble.com/virgilpana) [shot](https://dribbb
 
 Sample
 
-<p align="center">
-  <img width="300" height="600" src="https://media.giphy.com/media/AEzmlASRJ3NUTUq4cy/giphy.gif">
-</p>
+
+   | Light | Dark  |
+|--|--|
+| <center> <img src="https://media.giphy.com/media/clumgZIjLPQ0a8JnrI/giphy.gif" width="250"/> </center> | <center> <img src="https://media.giphy.com/media/joZotn96pULSc7fPPR/giphy.gif" width="250"/> </center>
+
 
 ## Getting started
 
 You should ensure that you add the router as a dependency in your flutter project.
 ```yaml
 dependencies:
-  direct_select: "^1.0.1"
+  direct_select: "^1.0.2"
 ```
 
 You should then run `flutter packages upgrade` or update your packages in IntelliJ.
@@ -122,6 +124,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 DirectSelect(
                     itemExtent: 35.0,
                     selectedIndex: selectedIndex1,
+                    backgroundColor: Colors.red,
                     child: MySelectionItem(
                       isForList: false,
                       title: elements1[selectedIndex1],

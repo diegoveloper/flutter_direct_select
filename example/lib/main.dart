@@ -8,9 +8,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData.dark(),
       home: MyHomePage(title: 'Flutter Direct Select Package'),
     );
   }
@@ -225,11 +224,14 @@ class MySelectionItem extends StatelessWidget {
     );
   }
 
-  _buildItem(BuildContext context) {
+  Widget _buildItem(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width,
       alignment: Alignment.center,
-      child: FittedBox(child: Text(title)),
+      child: FittedBox(
+          child: Text(
+        title,
+      )),
     );
   }
 }
