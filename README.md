@@ -6,13 +6,20 @@ This package allows you to scroll/select the value directly from the dropdown wi
 
 Inspired by [Virgil Pana](https://dribbble.com/virgilpana) [shot](https://dribbble.com/shots/3876250-DirectSelect-Dropdown-ux)
 
-Sample
+Samples
 
 
-   | Light | Dark  |
-|--|--|
-| <center> <img src="https://media.giphy.com/media/clumgZIjLPQ0a8JnrI/giphy.gif" width="250"/> </center> | <center> <img src="https://media.giphy.com/media/joZotn96pULSc7fPPR/giphy.gif" width="250"/> </center>
+Light 
 
+<p align="center">
+  <img width="300" height="600" src="https://media.giphy.com/media/clumgZIjLPQ0a8JnrI/giphy.gif">
+</p>
+
+Dark 
+
+<p align="center">
+  <img width="300" height="600" src="https://media.giphy.com/media/joZotn96pULSc7fPPR/giphy.gif">
+</p>
 
 ## Getting started
 
