@@ -17,7 +17,7 @@ Sample
 You should ensure that you add the router as a dependency in your flutter project.
 ```yaml
 dependencies:
-  direct_select: "^1.0.0"
+  direct_select: "^1.0.1"
 ```
 
 You should then run `flutter packages upgrade` or update your packages in IntelliJ.

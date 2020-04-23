@@ -49,24 +49,25 @@ class _DirectSelectState extends State<DirectSelect> {
     OverlayState overlayState = Overlay.of(context);
     _overlayEntry = OverlayEntry(
       builder: (context) => MySelectionOverlay(
-            key: _keyOverlay,
-            top: result + itemSize,
-            child: MySelectionList(
-              itemExtent: widget.itemExtent,
-              childCount: widget.items != null ? widget.items.length : 0,
-              onSelectedItemChanged: (index) {
-                if (index != null) {
-                  _currentIndex = index;
-                }
-              },
-              builder: (context, index) {
-                if (widget.items != null) {
-                  return widget.items[index];
-                }
-              },
-              controller: _controller,
-            ),
-          ),
+        key: _keyOverlay,
+        top: result + itemSize,
+        child: MySelectionList(
+          itemExtent: widget.itemExtent,
+          childCount: widget.items != null ? widget.items.length : 0,
+          onSelectedItemChanged: (index) {
+            if (index != null) {
+              _currentIndex = index;
+            }
+          },
+          builder: (context, index) {
+            if (widget.items != null) {
+              return widget.items[index];
+            }
+            return const SizedBox.shrink();
+          },
+          controller: _controller,
+        ),
+      ),
     );
 
     overlayState.insert(_overlayEntry);
@@ -109,8 +110,9 @@ class _DirectSelectState extends State<DirectSelect> {
     return GestureDetector(
       onVerticalDragStart: (_) => _createOverlay(),
       onVerticalDragEnd: (_) => _removeOverlay(),
-      onVerticalDragUpdate: (details) =>
-          _controller.jumpTo(_controller.offset - details.primaryDelta),
+      onVerticalDragUpdate: (details) => _controller.positions.isNotEmpty
+          ? _controller.jumpTo(_controller.offset - details.primaryDelta)
+          : null,
       child: Container(
         key: _key,
         child: widget.child,
