@@ -229,7 +229,7 @@ class MySelectionItem extends StatelessWidget {
     return Container(
       width: MediaQuery.of(context).size.width,
       alignment: Alignment.center,
-      child: Text(title),
+      child: FittedBox(child: Text(title)),
     );
   }
 }
