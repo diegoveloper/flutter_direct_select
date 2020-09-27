@@ -1,3 +1,7 @@
+## [1.0.3]
+
+* `mode` was added.
+
 ## [1.0.2 - 1.0.2+1]
 
 * `backgroundColor` was added.
