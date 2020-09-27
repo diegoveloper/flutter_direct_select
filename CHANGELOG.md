@@ -6,7 +6,7 @@
 
 ## [1.0.3]
 
-* `mode` was added.
+* `mode` was added, you can choose between `DirectSelectMode.drag` and `DirectSelectMode.tap`, drag is selected by default. Thanks Noor Dawod for the contribution.
 
 ## [1.0.2 - 1.0.2+1]
 

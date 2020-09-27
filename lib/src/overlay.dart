@@ -22,8 +22,7 @@ class _MySelectionOverlay extends StatefulWidget {
   }
 }
 
-class _MySelectionOverlayState extends State<_MySelectionOverlay>
-    with SingleTickerProviderStateMixin {
+class _MySelectionOverlayState extends State<_MySelectionOverlay> with SingleTickerProviderStateMixin {
   AnimationController _controller;
 
   @override
