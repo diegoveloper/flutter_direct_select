@@ -136,9 +136,9 @@ class _DirectSelectState extends State<DirectSelect> {
       onVerticalDragEnd: preferTapMode ? null : (_) => _removeOverlay(),
       onVerticalDragUpdate: preferTapMode
           ? null
-          : (details) => _controller.positions.isNotEmpty
-              ? _controller.jumpTo(_controller.offset - details.primaryDelta)
-              : null,
+          : (details) =>
+              // ignore: invalid_use_of_protected_member
+              _controller.positions.isNotEmpty ? _controller.jumpTo(_controller.offset - details.primaryDelta) : null,
       child: Container(
         key: _key,
         child: widget.child,
@@ -169,8 +169,7 @@ class _MySelectionOverlay extends StatefulWidget {
   }
 }
 
-class _MySelectionOverlayState extends State<_MySelectionOverlay>
-    with SingleTickerProviderStateMixin {
+class _MySelectionOverlayState extends State<_MySelectionOverlay> with SingleTickerProviderStateMixin {
   AnimationController _controller;
 
   @override
