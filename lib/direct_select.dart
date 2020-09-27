@@ -69,7 +69,6 @@ class _DirectSelectState extends State<DirectSelect> {
         top: result + itemSize,
         backgroundColor: widget.backgroundColor,
         child: _MySelectionList(
-          backgroundColor: widget.backgroundColor,
           itemExtent: widget.itemExtent,
           childCount: widget.items != null ? widget.items.length : 0,
           onItemChanged: (index) {
@@ -230,7 +229,6 @@ class _MySelectionList extends StatelessWidget {
   final ValueChanged<int> onItemChanged;
   final VoidCallback onItemSelected;
   final double itemExtent;
-  final Color backgroundColor;
 
   const _MySelectionList({
     Key key,
@@ -240,13 +238,12 @@ class _MySelectionList extends StatelessWidget {
     @required this.onItemChanged,
     @required this.onItemSelected,
     @required this.itemExtent,
-    this.backgroundColor,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: backgroundColor,
+      color: Colors.transparent,
       child: Container(
         height: MediaQuery.of(context).size.height,
         child: NotificationListener<ScrollNotification>(
@@ -264,7 +261,6 @@ class _MySelectionList extends StatelessWidget {
             useMagnifier: true,
             magnification: 1.15,
             diameterRatio: 3.0,
-            backgroundColor: backgroundColor,
             onSelectedItemChanged: onItemChanged,
             itemBuilder: builder,
           ),
