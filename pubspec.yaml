@@ -1,6 +1,6 @@
 name: direct_select
 description: This package allows you to scroll/select the value directly from the dropdown with less effort and time.
-version: 1.0.3
+version: 1.1.0
 homepage: https://twitter.com/diegoveloper
 repository: https://github.com/diegoveloper/flutter_direct_select/
 

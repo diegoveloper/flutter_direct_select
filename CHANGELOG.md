@@ -1,3 +1,9 @@
+## [1.1.0]
+
+* Added support for back button.
+* Split source code file into separate parts.
+* A couple of null bug fixes.
+
 ## [1.0.3]
 
 * `mode` was added.
