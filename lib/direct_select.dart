@@ -243,7 +243,7 @@ class _MySelectionList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Colors.transparent,
+      type: MaterialType.transparency,
       child: Container(
         height: MediaQuery.of(context).size.height,
         child: NotificationListener<ScrollNotification>(
