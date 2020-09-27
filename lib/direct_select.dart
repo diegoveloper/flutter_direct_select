@@ -1,28 +1,40 @@
-import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+
+enum DirectSelectMode {
+  /// The [DirectSelect] is engaged by dragging on it.
+  drag,
+
+  /// The [DirectSelect] is engaged by tapping on it.
+  tap,
+}
 
 class DirectSelect extends StatefulWidget {
-  /// Widget child you'll tap to display the Selection List
+  /// Widget child you'll tap to display the Selection List.
   final Widget child;
 
-  /// List of Widgets you'll display after you tap the child
+  /// List of Widgets you'll display after you tap the child.
   final List<Widget> items;
 
-  /// Listener when you select any item from the Selection List
+  /// Listener when you select any item from the Selection List.
   final ValueChanged<int> onSelectedItemChanged;
 
-  /// Height of each Item of the Selection List
+  /// Height of each Item of the Selection List.
   final double itemExtent;
 
-  /// Selected index of your selection list
+  /// Selected index of your selection list.
   final int selectedIndex;
 
-  /// Color of the background, [Colors.white] by default
+  /// The preferred method to engage this widget.
+  final DirectSelectMode mode;
+
+  /// Color of the background, [Colors.white] by default.
   final Color backgroundColor;
 
   const DirectSelect({
     Key key,
     this.selectedIndex,
+    this.mode = DirectSelectMode.drag,
     @required this.child,
     @required this.items,
     @required this.onSelectedItemChanged,
@@ -57,12 +69,16 @@ class _DirectSelectState extends State<DirectSelect> {
         top: result + itemSize,
         backgroundColor: widget.backgroundColor,
         child: _MySelectionList(
-          backgroundColor: widget.backgroundColor,
           itemExtent: widget.itemExtent,
           childCount: widget.items != null ? widget.items.length : 0,
-          onSelectedItemChanged: (index) {
+          onItemChanged: (index) {
             if (index != null) {
               _currentIndex = index;
+            }
+          },
+          onItemSelected: () {
+            if (widget.mode == DirectSelectMode.tap) {
+              _removeOverlay();
             }
           },
           builder: (context, index) {
@@ -113,12 +129,16 @@ class _DirectSelectState extends State<DirectSelect> {
 
   @override
   Widget build(BuildContext context) {
+    final preferTapMode = widget.mode == DirectSelectMode.tap;
     return GestureDetector(
-      onVerticalDragStart: (_) => _createOverlay(),
-      onVerticalDragEnd: (_) => _removeOverlay(),
-      onVerticalDragUpdate: (details) => _controller.positions.isNotEmpty
-          ? _controller.jumpTo(_controller.offset - details.primaryDelta)
-          : null,
+      onTap: preferTapMode ? _createOverlay : null,
+      onVerticalDragStart: preferTapMode ? null : (_) => _createOverlay(),
+      onVerticalDragEnd: preferTapMode ? null : (_) => _removeOverlay(),
+      onVerticalDragUpdate: preferTapMode
+          ? null
+          : (details) => _controller.positions.isNotEmpty
+              ? _controller.jumpTo(_controller.offset - details.primaryDelta)
+              : null,
       child: Container(
         key: _key,
         child: widget.child,
@@ -156,10 +176,11 @@ class _MySelectionOverlayState extends State<_MySelectionOverlay>
   @override
   void initState() {
     _controller = AnimationController(
-        vsync: this,
-        lowerBound: 0.0,
-        upperBound: 1.0,
-        duration: Duration(milliseconds: 230));
+      vsync: this,
+      lowerBound: 0.0,
+      upperBound: 1.0,
+      duration: const Duration(milliseconds: 230),
+    );
     super.initState();
   }
 
@@ -205,26 +226,33 @@ class _MySelectionList extends StatelessWidget {
   final FixedExtentScrollController controller;
   final IndexedWidgetBuilder builder;
   final int childCount;
-  final ValueChanged<int> onSelectedItemChanged;
+  final ValueChanged<int> onItemChanged;
+  final VoidCallback onItemSelected;
   final double itemExtent;
-  final Color backgroundColor;
 
   const _MySelectionList({
     Key key,
     @required this.controller,
     @required this.builder,
     @required this.childCount,
-    @required this.onSelectedItemChanged,
+    @required this.onItemChanged,
+    @required this.onItemSelected,
     @required this.itemExtent,
-    this.backgroundColor,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: backgroundColor,
+      type: MaterialType.transparency,
       child: Container(
-          height: MediaQuery.of(context).size.height,
+        height: MediaQuery.of(context).size.height,
+        child: NotificationListener<ScrollNotification>(
+          onNotification: (scrollNotification) {
+            if (scrollNotification is ScrollEndNotification) {
+              onItemSelected();
+            }
+            return false;
+          },
           child: CupertinoPicker.builder(
             scrollController: controller,
             offAxisFraction: 0.0,
@@ -233,10 +261,11 @@ class _MySelectionList extends StatelessWidget {
             useMagnifier: true,
             magnification: 1.15,
             diameterRatio: 3.0,
-            backgroundColor: backgroundColor,
-            onSelectedItemChanged: onSelectedItemChanged,
+            onSelectedItemChanged: onItemChanged,
             itemBuilder: builder,
-          )),
+          ),
+        ),
+      ),
     );
   }
 }
