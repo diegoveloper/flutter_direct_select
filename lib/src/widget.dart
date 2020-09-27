@@ -64,7 +64,7 @@ class _DirectSelectState extends State<DirectSelect> {
         useRootNavigator: true,
         barrierDismissible: false,
         barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
-        barrierColor: const Color(0x00FFFFFF),
+        barrierColor: null, // this ensures that the barrier would be transparent.
         transitionDuration: const Duration(milliseconds: 230),
         transitionBuilder: (buildContext, animation, secondaryAnimation, child) => FadeTransition(
           opacity: CurvedAnimation(
