@@ -51,10 +51,7 @@ class _MyHomePageState extends State<MyHomePage> {
     "Keep in weight",
   ];
 
-  int selectedIndex1 = 0,
-      selectedIndex2 = 0,
-      selectedIndex3 = 0,
-      selectedIndex4 = 0;
+  int selectedIndex1 = 0, selectedIndex2 = 0, selectedIndex3 = 0, selectedIndex4 = 0;
 
   List<Widget> _buildItems1() {
     return elements1
@@ -105,8 +102,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   padding: const EdgeInsets.only(left: 10.0),
                   child: Text(
                     "To which meal?",
-                    style: TextStyle(
-                        color: Colors.grey, fontWeight: FontWeight.w500),
+                    style: TextStyle(color: Colors.grey, fontWeight: FontWeight.w500),
                   ),
                 ),
                 DirectSelect(
@@ -126,8 +122,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   padding: const EdgeInsets.only(left: 10.0, top: 20.0),
                   child: Text(
                     "Search our database by name",
-                    style: TextStyle(
-                        color: Colors.grey, fontWeight: FontWeight.w500),
+                    style: TextStyle(color: Colors.grey, fontWeight: FontWeight.w500),
                   ),
                 ),
                 DirectSelect(
@@ -147,8 +142,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   padding: const EdgeInsets.only(left: 10.0, top: 20.0),
                   child: Text(
                     "Select your workout schedule",
-                    style: TextStyle(
-                        color: Colors.grey, fontWeight: FontWeight.w500),
+                    style: TextStyle(color: Colors.grey, fontWeight: FontWeight.w500),
                   ),
                 ),
                 DirectSelect(
@@ -168,13 +162,13 @@ class _MyHomePageState extends State<MyHomePage> {
                   padding: const EdgeInsets.only(left: 10.0, top: 20.0),
                   child: Text(
                     "Select your goal",
-                    style: TextStyle(
-                        color: Colors.grey, fontWeight: FontWeight.w500),
+                    style: TextStyle(color: Colors.grey, fontWeight: FontWeight.w500),
                   ),
                 ),
                 DirectSelect(
                     itemExtent: 35.0,
                     selectedIndex: selectedIndex4,
+                    mode: DirectSelectMode.tap,
                     child: MySelectionItem(
                       isForList: false,
                       title: elements4[selectedIndex4],
@@ -197,8 +191,7 @@ class MySelectionItem extends StatelessWidget {
   final String title;
   final bool isForList;
 
-  const MySelectionItem({Key key, this.title, this.isForList = true})
-      : super(key: key);
+  const MySelectionItem({Key key, this.title, this.isForList = true}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
