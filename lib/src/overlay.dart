@@ -5,7 +5,6 @@ class _MySelectionOverlay extends StatefulWidget {
   final Widget child;
   final double bottom;
   final Color backgroundColor;
-  final Color textColor;
 
   const _MySelectionOverlay({
     Key key,
@@ -13,7 +12,6 @@ class _MySelectionOverlay extends StatefulWidget {
     this.bottom,
     this.child,
     this.backgroundColor,
-    this.textColor,
   }) : super(key: key);
 
   @override

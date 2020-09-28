@@ -101,7 +101,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 Padding(
                   padding: const EdgeInsets.only(left: 10.0),
                   child: Text(
-                    "To which meal?",
+                    "To which meal? (Tap to select)",
                     style: TextStyle(color: Colors.grey, fontWeight: FontWeight.w500),
                   ),
                 ),
@@ -117,6 +117,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         selectedIndex1 = index;
                       });
                     },
+                    mode: DirectSelectMode.tap,
                     items: _buildItems1()),
                 Padding(
                   padding: const EdgeInsets.only(left: 10.0, top: 20.0),
@@ -161,7 +162,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 Padding(
                   padding: const EdgeInsets.only(left: 10.0, top: 20.0),
                   child: Text(
-                    "Select your goal",
+                    "Select your goal (Tap to select)",
                     style: TextStyle(color: Colors.grey, fontWeight: FontWeight.w500),
                   ),
                 ),
