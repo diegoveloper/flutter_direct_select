@@ -25,6 +25,9 @@ abstract class _DirectSelectBase extends StatefulWidget {
   /// See: [DirectSelect.backgroundColor]
   final Color backgroundColor;
 
+  /// See: [DirectSelect.selectionColor]
+  final Color selectionColor;
+
   const _DirectSelectBase({
     this.child,
     this.items,
@@ -34,6 +37,7 @@ abstract class _DirectSelectBase extends StatefulWidget {
     this.selectedIndex,
     this.mode,
     this.backgroundColor,
+    this.selectionColor,
     Key key,
   }) : super(key: key);
 
@@ -91,6 +95,7 @@ abstract class _DirectSelectBaseState<T extends _DirectSelectBase> extends State
         itemExtent: widget.itemExtent,
         itemMagnification: widget.itemMagnification,
         childCount: widget.items != null ? widget.items.length : 0,
+        selectionColor: widget.selectionColor,
         onItemChanged: (index) {
           if (index != null) {
             _currentIndex = index;
