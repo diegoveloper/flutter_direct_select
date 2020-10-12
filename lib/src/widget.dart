@@ -25,6 +25,9 @@ class DirectSelect extends StatelessWidget {
   /// Color of the background, [Colors.white] by default.
   final Color backgroundColor;
 
+  /// Color of the selection background, [Colors.black12] by default.
+  final Color selectionColor;
+
   const DirectSelect({
     @required this.items,
     @required this.onSelectedItemChanged,
@@ -34,6 +37,7 @@ class DirectSelect extends StatelessWidget {
     this.mode = DirectSelectMode.drag,
     this.itemMagnification = 1.15,
     this.backgroundColor = Colors.white,
+    this.selectionColor = Colors.black12,
     Key key,
   })  : assert(items != null && items.length > 0),
         assert(onSelectedItemChanged != null),
@@ -56,6 +60,7 @@ class DirectSelect extends StatelessWidget {
           onSelectedItemChanged: onSelectedItemChanged,
           itemExtent: itemExtent,
           backgroundColor: backgroundColor,
+          selectionColor: selectionColor,
           child: child,
         );
       case DirectSelectMode.tap:
@@ -67,6 +72,7 @@ class DirectSelect extends StatelessWidget {
           onSelectedItemChanged: onSelectedItemChanged,
           itemExtent: itemExtent,
           backgroundColor: backgroundColor,
+          selectionColor: selectionColor,
           child: child,
         );
     }

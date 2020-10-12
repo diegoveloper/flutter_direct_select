@@ -10,6 +10,7 @@ class _DirectSelectTap extends _DirectSelectBase {
     int selectedIndex,
     DirectSelectMode mode,
     Color backgroundColor,
+    Color selectionColor,
     Key key,
   }) : super(
           selectedIndex: selectedIndex,
@@ -19,6 +20,7 @@ class _DirectSelectTap extends _DirectSelectBase {
           onSelectedItemChanged: onSelectedItemChanged,
           itemExtent: itemExtent,
           backgroundColor: backgroundColor,
+          selectionColor: selectionColor,
           child: child,
           key: key,
         );

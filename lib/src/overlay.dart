@@ -20,7 +20,8 @@ class _MySelectionOverlay extends StatefulWidget {
   }
 }
 
-class _MySelectionOverlayState extends State<_MySelectionOverlay> with SingleTickerProviderStateMixin {
+class _MySelectionOverlayState extends State<_MySelectionOverlay>
+    with SingleTickerProviderStateMixin {
   AnimationController _controller;
 
   @override
@@ -80,6 +81,7 @@ class _MySelectionList extends StatelessWidget {
   final VoidCallback onItemSelected;
   final double itemExtent;
   final double itemMagnification;
+  final Color selectionColor;
 
   const _MySelectionList({
     Key key,
@@ -90,6 +92,7 @@ class _MySelectionList extends StatelessWidget {
     @required this.onItemSelected,
     @required this.itemExtent,
     @required this.itemMagnification,
+    @required this.selectionColor,
   }) : super(key: key);
 
   @override
@@ -114,6 +117,7 @@ class _MySelectionList extends StatelessWidget {
             magnification: itemMagnification,
             diameterRatio: 3.0,
             onSelectedItemChanged: onItemChanged,
+            selectionOverlay: CupertinoPickerDefaultSelectionOverlay(background: selectionColor),
             itemBuilder: builder,
           ),
         ),
