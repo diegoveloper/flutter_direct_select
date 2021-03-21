@@ -2,15 +2,16 @@ part of direct_select_plugin;
 
 class _DirectSelectDrag extends _DirectSelectBase {
   const _DirectSelectDrag({
-    Widget child,
-    List<Widget> items,
-    ValueChanged<int> onSelectedItemChanged,
-    double itemExtent,
-    double itemMagnification,
-    int selectedIndex,
-    DirectSelectMode mode,
-    Color backgroundColor,
-    Key key,
+    Widget? child,
+    List<Widget>? items,
+    ValueChanged<int?>? onSelectedItemChanged,
+    double? itemExtent,
+    double? itemMagnification,
+    int? selectedIndex,
+    DirectSelectMode? mode,
+    Color? backgroundColor,
+    Color? selectionColor,
+    Key? key,
   }) : super(
           selectedIndex: selectedIndex,
           mode: mode,
@@ -19,6 +20,7 @@ class _DirectSelectDrag extends _DirectSelectBase {
           onSelectedItemChanged: onSelectedItemChanged,
           itemExtent: itemExtent,
           backgroundColor: backgroundColor,
+          selectionColor: selectionColor,
           child: child,
           key: key,
         );
@@ -28,16 +30,17 @@ class _DirectSelectDrag extends _DirectSelectBase {
 }
 
 class _DirectSelectDragState extends _DirectSelectBaseState<_DirectSelectDrag> {
-  OverlayEntry _overlayEntry;
-  GlobalKey<_MySelectionOverlayState> _keyOverlay;
+  OverlayEntry? _overlayEntry;
+  GlobalKey<_MySelectionOverlayState>? _keyOverlay;
 
   @override
   Future<void> _createOverlay() async {
     if (mounted) {
-      OverlayState overlayState = Overlay.of(context);
+      OverlayState? overlayState = Overlay.of(context);
       if (overlayState != null) {
-        _overlayEntry = OverlayEntry(builder: (_) => _overlayWidget(_keyOverlay));
-        overlayState.insert(_overlayEntry);
+        _overlayEntry =
+            OverlayEntry(builder: (_) => _overlayWidget(_keyOverlay));
+        overlayState.insert(_overlayEntry!);
       }
     }
   }
@@ -45,7 +48,7 @@ class _DirectSelectDragState extends _DirectSelectBaseState<_DirectSelectDrag> {
   @override
   Future<void> _removeOverlay() async {
     if (mounted) {
-      final currentState = _keyOverlay.currentState;
+      final currentState = _keyOverlay!.currentState;
       if (currentState != null) {
         currentState.reverse(_overlayEntry);
       }

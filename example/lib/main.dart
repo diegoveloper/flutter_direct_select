@@ -16,9 +16,9 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+  MyHomePage({Key? key, this.title}) : super(key: key);
 
-  final String title;
+  final String? title;
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -51,7 +51,7 @@ class _MyHomePageState extends State<MyHomePage> {
     "Keep in weight",
   ];
 
-  int selectedIndex1 = 0, selectedIndex2 = 0, selectedIndex3 = 0, selectedIndex4 = 0;
+  int? selectedIndex1 = 0, selectedIndex2 = 0, selectedIndex3 = 0, selectedIndex4 = 0;
 
   List<Widget> _buildItems1() {
     return elements1
@@ -89,7 +89,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text(widget.title!),
       ),
       body: Padding(
         padding: const EdgeInsets.all(15.0),
@@ -107,10 +107,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 DirectSelect(
                     itemExtent: 35.0,
-                    selectedIndex: selectedIndex1,
+                    selectedIndex: selectedIndex1!,
                     child: MySelectionItem(
                       isForList: false,
-                      title: elements1[selectedIndex1],
+                      title: elements1[selectedIndex1!],
                     ),
                     onSelectedItemChanged: (index) {
                       setState(() {
@@ -128,10 +128,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 DirectSelect(
                     itemExtent: 35.0,
-                    selectedIndex: selectedIndex2,
+                    selectedIndex: selectedIndex2!,
                     child: MySelectionItem(
                       isForList: false,
-                      title: elements2[selectedIndex2],
+                      title: elements2[selectedIndex2!],
                     ),
                     onSelectedItemChanged: (index) {
                       setState(() {
@@ -148,10 +148,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 DirectSelect(
                     itemExtent: 35.0,
-                    selectedIndex: selectedIndex3,
+                    selectedIndex: selectedIndex3!,
                     child: MySelectionItem(
                       isForList: false,
-                      title: elements3[selectedIndex3],
+                      title: elements3[selectedIndex3!],
                     ),
                     onSelectedItemChanged: (index) {
                       setState(() {
@@ -168,11 +168,11 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 DirectSelect(
                     itemExtent: 35.0,
-                    selectedIndex: selectedIndex4,
+                    selectedIndex: selectedIndex4!,
                     mode: DirectSelectMode.tap,
                     child: MySelectionItem(
                       isForList: false,
-                      title: elements4[selectedIndex4],
+                      title: elements4[selectedIndex4!],
                     ),
                     onSelectedItemChanged: (index) {
                       setState(() {
@@ -189,10 +189,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
 //You can use any Widget
 class MySelectionItem extends StatelessWidget {
-  final String title;
+  final String? title;
   final bool isForList;
 
-  const MySelectionItem({Key key, this.title, this.isForList = true}) : super(key: key);
+  const MySelectionItem({Key? key, this.title, this.isForList = true}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -224,7 +224,7 @@ class MySelectionItem extends StatelessWidget {
       alignment: Alignment.center,
       child: FittedBox(
           child: Text(
-        title,
+        title!,
       )),
     );
   }
