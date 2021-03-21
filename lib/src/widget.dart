@@ -8,7 +8,7 @@ class DirectSelect extends StatelessWidget {
   final List<Widget> items;
 
   /// Listener when you select any item from the Selection List.
-  final ValueChanged<int> onSelectedItemChanged;
+  final ValueChanged<int?> onSelectedItemChanged;
 
   /// Height of each Item of the Selection List.
   final double itemExtent;
@@ -29,23 +29,18 @@ class DirectSelect extends StatelessWidget {
   final Color selectionColor;
 
   const DirectSelect({
-    @required this.items,
-    @required this.onSelectedItemChanged,
-    @required this.itemExtent,
-    @required this.child,
+    required this.items,
+    required this.onSelectedItemChanged,
+    required this.itemExtent,
+    required this.child,
     this.selectedIndex = 0,
     this.mode = DirectSelectMode.drag,
     this.itemMagnification = 1.15,
     this.backgroundColor = Colors.white,
     this.selectionColor = Colors.black12,
-    Key key,
-  })  : assert(items != null && items.length > 0),
-        assert(onSelectedItemChanged != null),
-        assert(itemExtent != null),
-        assert(child != null),
-        assert(selectedIndex != null && selectedIndex >= 0 && selectedIndex < items.length),
-        assert(mode != null),
-        assert(itemMagnification != null && itemMagnification >= 1.0),
+    Key? key,
+  })  : assert(items.length > 0),
+        assert(itemMagnification >= 1.0),
         super(key: key);
 
   @override
@@ -76,6 +71,6 @@ class DirectSelect extends StatelessWidget {
           child: child,
         );
     }
-    throw UnimplementedError('Unknown DirectSelectMode provided: $mode');
+    throw ArgumentError('Unknown DirectSelectMode provided: $mode');
   }
 }

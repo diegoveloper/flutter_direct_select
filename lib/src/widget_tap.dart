@@ -2,16 +2,16 @@ part of direct_select_plugin;
 
 class _DirectSelectTap extends _DirectSelectBase {
   const _DirectSelectTap({
-    Widget child,
-    List<Widget> items,
-    ValueChanged<int> onSelectedItemChanged,
-    double itemExtent,
-    double itemMagnification,
-    int selectedIndex,
-    DirectSelectMode mode,
-    Color backgroundColor,
-    Color selectionColor,
-    Key key,
+    Widget? child,
+    List<Widget>? items,
+    ValueChanged<int?>? onSelectedItemChanged,
+    double? itemExtent,
+    double? itemMagnification,
+    int? selectedIndex,
+    DirectSelectMode? mode,
+    Color? backgroundColor,
+    Color? selectionColor,
+    Key? key,
   }) : super(
           selectedIndex: selectedIndex,
           mode: mode,
@@ -30,7 +30,7 @@ class _DirectSelectTap extends _DirectSelectBase {
 }
 
 class _DirectSelectTapState extends _DirectSelectBaseState<_DirectSelectTap> {
-  bool _dialogShowing;
+  late bool _dialogShowing;
 
   @override
   Future<void> _createOverlay() async {
@@ -40,10 +40,14 @@ class _DirectSelectTapState extends _DirectSelectBaseState<_DirectSelectTap> {
         context: context,
         useRootNavigator: true,
         barrierDismissible: false,
-        barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
-        barrierColor: null, // this ensures that the barrier would be transparent.
+        barrierLabel:
+            MaterialLocalizations.of(context).modalBarrierDismissLabel,
+        barrierColor: Colors
+            .transparent, // this ensures that the barrier would be transparent.
         transitionDuration: const Duration(milliseconds: 230),
-        transitionBuilder: (buildContext, animation, secondaryAnimation, child) => FadeTransition(
+        transitionBuilder:
+            (buildContext, animation, secondaryAnimation, child) =>
+                FadeTransition(
           opacity: CurvedAnimation(
             parent: animation,
             curve: Curves.easeOut,
@@ -66,7 +70,7 @@ class _DirectSelectTapState extends _DirectSelectBaseState<_DirectSelectTap> {
   Future<void> _removeOverlay() async {
     if (mounted) {
       final navigator = Navigator.of(context);
-      if (_dialogShowing && navigator != null) {
+      if (_dialogShowing) {
         if (!await navigator.maybePop()) {
           _notifySelectedItem();
         }
