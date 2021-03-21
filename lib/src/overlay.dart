@@ -1,13 +1,13 @@
 part of direct_select_plugin;
 
 class _MySelectionOverlay extends StatefulWidget {
-  final double top;
-  final Widget child;
-  final double bottom;
-  final Color backgroundColor;
+  final double? top;
+  final Widget? child;
+  final double? bottom;
+  final Color? backgroundColor;
 
   const _MySelectionOverlay({
-    Key key,
+    Key? key,
     this.top,
     this.bottom,
     this.child,
@@ -22,7 +22,7 @@ class _MySelectionOverlay extends StatefulWidget {
 
 class _MySelectionOverlayState extends State<_MySelectionOverlay>
     with SingleTickerProviderStateMixin {
-  AnimationController _controller;
+  late AnimationController _controller;
 
   @override
   void initState() {
@@ -68,31 +68,31 @@ class _MySelectionOverlayState extends State<_MySelectionOverlay>
     );
   }
 
-  void reverse(OverlayEntry overlayEntry) {
-    _controller.reverse().whenComplete(() => overlayEntry.remove());
+  void reverse(OverlayEntry? overlayEntry) {
+    _controller.reverse().whenComplete(() => overlayEntry!.remove());
   }
 }
 
 class _MySelectionList extends StatelessWidget {
-  final FixedExtentScrollController controller;
+  final FixedExtentScrollController? controller;
   final IndexedWidgetBuilder builder;
   final int childCount;
   final ValueChanged<int> onItemChanged;
   final VoidCallback onItemSelected;
-  final double itemExtent;
-  final double itemMagnification;
-  final Color selectionColor;
+  final double? itemExtent;
+  final double? itemMagnification;
+  final Color? selectionColor;
 
   const _MySelectionList({
-    Key key,
-    @required this.controller,
-    @required this.builder,
-    @required this.childCount,
-    @required this.onItemChanged,
-    @required this.onItemSelected,
-    @required this.itemExtent,
-    @required this.itemMagnification,
-    @required this.selectionColor,
+    Key? key,
+    required this.controller,
+    required this.builder,
+    required this.childCount,
+    required this.onItemChanged,
+    required this.onItemSelected,
+    required this.itemExtent,
+    required this.itemMagnification,
+    required this.selectionColor,
   }) : super(key: key);
 
   @override
@@ -111,13 +111,13 @@ class _MySelectionList extends StatelessWidget {
           child: CupertinoPicker.builder(
             scrollController: controller,
             offAxisFraction: 0.0,
-            itemExtent: itemExtent,
+            itemExtent: itemExtent!,
             childCount: childCount,
             useMagnifier: true,
-            magnification: itemMagnification,
+            magnification: itemMagnification!,
             diameterRatio: 3.0,
             onSelectedItemChanged: onItemChanged,
-            selectionOverlay: CupertinoPickerDefaultSelectionOverlay(background: selectionColor),
+            selectionOverlay: CupertinoPickerDefaultSelectionOverlay(background: selectionColor!),
             itemBuilder: builder,
           ),
         ),
