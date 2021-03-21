@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+  MyHomePage({Key? key, required this.title}) : super(key: key);
 
   final String title;
 
@@ -118,7 +118,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                     onSelectedItemChanged: (index) {
                       setState(() {
-                        selectedIndex1 = index;
+                        selectedIndex1 = index!;
                       });
                     },
                     items: _buildItems1()),
@@ -139,7 +139,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                     onSelectedItemChanged: (index) {
                       setState(() {
-                        selectedIndex2 = index;
+                        selectedIndex2 = index!;
                       });
                     },
                     items: _buildItems2()),
@@ -160,7 +160,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                     onSelectedItemChanged: (index) {
                       setState(() {
-                        selectedIndex3 = index;
+                        selectedIndex3 = index!;
                       });
                     },
                     items: _buildItems3()),
@@ -181,7 +181,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                     onSelectedItemChanged: (index) {
                       setState(() {
-                        selectedIndex4 = index;
+                        selectedIndex4 = index!;
                       });
                     },
                     items: _buildItems4()),
@@ -197,7 +197,7 @@ class MySelectionItem extends StatelessWidget {
   final String title;
   final bool isForList;
 
-  const MySelectionItem({Key key, this.title, this.isForList = true})
+  const MySelectionItem({Key? key, required this.title, this.isForList = true})
       : super(key: key);
 
   @override

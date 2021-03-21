@@ -9,48 +9,45 @@ class DirectSelect extends StatefulWidget {
   final List<Widget> items;
 
   /// Listener when you select any item from the Selection List
-  final ValueChanged<int> onSelectedItemChanged;
+  final ValueChanged<int?> onSelectedItemChanged;
 
   /// Height of each Item of the Selection List
   final double itemExtent;
 
   /// Selected index of your selection list
-  final int selectedIndex;
+  final int? selectedIndex;
 
   /// Color of the background, [Colors.white] by default
   final Color backgroundColor;
 
   const DirectSelect({
-    Key key,
+    Key? key,
     this.selectedIndex,
-    @required this.child,
-    @required this.items,
-    @required this.onSelectedItemChanged,
-    @required this.itemExtent,
+    required this.child,
+    required this.items,
+    required this.onSelectedItemChanged,
+    required this.itemExtent,
     this.backgroundColor = Colors.white,
-  })  : assert(child != null),
-        assert(onSelectedItemChanged != null),
-        assert(itemExtent != null),
-        super(key: key);
+  }) : super(key: key);
 
   @override
   _DirectSelectState createState() => _DirectSelectState();
 }
 
 class _DirectSelectState extends State<DirectSelect> {
-  FixedExtentScrollController _controller;
-  OverlayEntry _overlayEntry;
+  FixedExtentScrollController? _controller;
+  OverlayEntry? _overlayEntry;
   GlobalKey _key = GlobalKey();
   GlobalKey<_MySelectionOverlayState> _keyOverlay = GlobalKey();
-  int _currentIndex;
+  int? _currentIndex;
 
   _createOverlay() async {
-    RenderBox box = _key.currentContext.findRenderObject();
+    RenderBox box = _key.currentContext!.findRenderObject() as RenderBox;
     final position = box.localToGlobal(Offset.zero);
     final half = MediaQuery.of(context).size.height / 2;
     final result = -half + position.dy;
     final itemSize = widget.itemExtent;
-    OverlayState overlayState = Overlay.of(context);
+    OverlayState overlayState = Overlay.of(context)!;
     _overlayEntry = OverlayEntry(
       builder: (context) => _MySelectionOverlay(
         key: _keyOverlay,
@@ -59,14 +56,12 @@ class _DirectSelectState extends State<DirectSelect> {
         child: _MySelectionList(
           backgroundColor: widget.backgroundColor,
           itemExtent: widget.itemExtent,
-          childCount: widget.items != null ? widget.items.length : 0,
+          childCount: widget.items.isNotEmpty ? widget.items.length : 0,
           onSelectedItemChanged: (index) {
-            if (index != null) {
-              _currentIndex = index;
-            }
+            _currentIndex = index;
           },
           builder: (context, index) {
-            if (widget.items != null) {
+            if (widget.items.isNotEmpty) {
               return widget.items[index];
             }
             return const SizedBox.shrink();
@@ -76,11 +71,11 @@ class _DirectSelectState extends State<DirectSelect> {
       ),
     );
 
-    overlayState.insert(_overlayEntry);
+    overlayState.insert(_overlayEntry!);
   }
 
   _removeOverlay() {
-    _keyOverlay.currentState.reverse(_overlayEntry);
+    _keyOverlay.currentState!.reverse(_overlayEntry);
     widget.onSelectedItemChanged(_currentIndex);
   }
 
@@ -88,9 +83,9 @@ class _DirectSelectState extends State<DirectSelect> {
   void didUpdateWidget(DirectSelect oldWidget) {
     if (widget.selectedIndex != oldWidget.selectedIndex) {
       _currentIndex = widget.selectedIndex;
-      _controller.dispose();
+      _controller!.dispose();
       _controller = FixedExtentScrollController(
-        initialItem: widget.selectedIndex,
+        initialItem: widget.selectedIndex!,
       );
     }
     super.didUpdateWidget(oldWidget);
@@ -100,14 +95,14 @@ class _DirectSelectState extends State<DirectSelect> {
   void initState() {
     _currentIndex = widget.selectedIndex ?? 0;
     _controller = FixedExtentScrollController(
-      initialItem: widget.selectedIndex,
+      initialItem: widget.selectedIndex!,
     );
     super.initState();
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    _controller!.dispose();
     super.dispose();
   }
 
@@ -116,8 +111,8 @@ class _DirectSelectState extends State<DirectSelect> {
     return GestureDetector(
       onVerticalDragStart: (_) => _createOverlay(),
       onVerticalDragEnd: (_) => _removeOverlay(),
-      onVerticalDragUpdate: (details) => _controller.positions.isNotEmpty
-          ? _controller.jumpTo(_controller.offset - details.primaryDelta)
+      onVerticalDragUpdate: (details) => _controller!.positions.isNotEmpty
+          ? _controller!.jumpTo(_controller!.offset - details.primaryDelta!)
           : null,
       child: Container(
         key: _key,
@@ -128,14 +123,14 @@ class _DirectSelectState extends State<DirectSelect> {
 }
 
 class _MySelectionOverlay extends StatefulWidget {
-  final double top;
-  final Widget child;
-  final double bottom;
-  final Color backgroundColor;
-  final Color textColor;
+  final double? top;
+  final Widget? child;
+  final double? bottom;
+  final Color? backgroundColor;
+  final Color? textColor;
 
   const _MySelectionOverlay({
-    Key key,
+    Key? key,
     this.top,
     this.bottom,
     this.child,
@@ -151,7 +146,7 @@ class _MySelectionOverlay extends StatefulWidget {
 
 class _MySelectionOverlayState extends State<_MySelectionOverlay>
     with SingleTickerProviderStateMixin {
-  AnimationController _controller;
+  late AnimationController _controller;
 
   @override
   void initState() {
@@ -196,26 +191,26 @@ class _MySelectionOverlayState extends State<_MySelectionOverlay>
     );
   }
 
-  void reverse(OverlayEntry overlayEntry) {
-    _controller.reverse().whenComplete(() => overlayEntry.remove());
+  void reverse(OverlayEntry? overlayEntry) {
+    _controller.reverse().whenComplete(() => overlayEntry!.remove());
   }
 }
 
 class _MySelectionList extends StatelessWidget {
-  final FixedExtentScrollController controller;
+  final FixedExtentScrollController? controller;
   final IndexedWidgetBuilder builder;
   final int childCount;
   final ValueChanged<int> onSelectedItemChanged;
   final double itemExtent;
-  final Color backgroundColor;
+  final Color? backgroundColor;
 
   const _MySelectionList({
-    Key key,
-    @required this.controller,
-    @required this.builder,
-    @required this.childCount,
-    @required this.onSelectedItemChanged,
-    @required this.itemExtent,
+    Key? key,
+    required this.controller,
+    required this.builder,
+    required this.childCount,
+    required this.onSelectedItemChanged,
+    required this.itemExtent,
     this.backgroundColor,
   }) : super(key: key);
 

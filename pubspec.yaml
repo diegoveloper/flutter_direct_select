@@ -5,7 +5,7 @@ homepage: https://twitter.com/diegoveloper
 repository: https://github.com/diegoveloper/flutter_direct_select/
 
 environment:
-  sdk: ">=2.3.0 <3.0.0"
+  sdk: '>=2.12.0 <3.0.0'
 
 dependencies:
   flutter:
