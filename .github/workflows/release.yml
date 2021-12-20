@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     name: 'Check Version Tag'
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - name: 'Get Latest Version'
         id: previoustag
         uses: "WyriHaximus/github-action-get-previous-tag@master"
