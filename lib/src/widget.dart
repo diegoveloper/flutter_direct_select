@@ -71,6 +71,5 @@ class DirectSelect extends StatelessWidget {
           child: child,
         );
     }
-    throw ArgumentError('Unknown DirectSelectMode provided: $mode');
   }
 }
